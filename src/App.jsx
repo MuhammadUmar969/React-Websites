@@ -1,10 +1,10 @@
 import React from 'react'
 import Quiz from './Quiz/Quiz'
-import "./App.css"
+import Remainder from './Remainder/Remainder'
 const App = () => {
   return (
     <>
-      <Quiz />
+      <Remainder />
     </>
   )
 }
