@@ -1,6 +1,10 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 export default function Quiz() {
+	// Define a state variable here to track question status
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [questionNum, setQuestionNum] = useState(1);
+
 	const questions = [
 		{
 			questionText: 'What is the capital of France?',
@@ -40,38 +44,51 @@ export default function Quiz() {
 		},
 	]
 
-    const [currentIndex, setCurrentIndex] = useState(0);
+	function handleAnswerClick(isCorrect) {
+		// Check if correct answer is pressed. (See the hint on the left)
+        if(isCorrect) {
+            setScore((score) => score + 1);
+        }
+        
+		if (currentIndex === questions.length - 1) {
+			// quiz over
+			setQuizFinished(true)
+		} else {
+			setCurrentIndex((value) => value + 1)
+			setQuestionNum((value) => value + 1);
+		}
+	}
 
-	// Define function body to increment the question index variable
-	function handleAnswerClick() {
-        setCurrentIndex((prev) => prev + 1);
-    }
-
-	// Define a state variable here to track question status
+	const [quizFinished, setQuizFinished] = useState(false)
+    const [score, setScore] = useState(0)
+	// Create a state variable here [score, setScore]
 
 	return (
 		<div className="app">
-			{false ? (
+			{quizFinished ? (
+				/* Change this hardcoded 1 to state variable score else */
 				<div className="score-section">
-					You scored 1 out of {questions.length}
+					You scored {score} out of {questions.length}
 				</div>
 			) : (
 				<>
 					<div className="question-section">
-						<div className="question-count">
-							<span>Question 1</span>/{questions.length}
-						</div>
-						{/* You should change the "0" here to a state variable */}
+					<div className="question-count">
+                    <span>Question {questionNum}</span>/{questions.length}
+                   </div>
+
 						<div className="question-text">
 							{questions[currentIndex].questionText}
 						</div>
 					</div>
-					{/* You should change the "0" here to a state variable */}
 					<div className="answer-section">
 						{questions[currentIndex].answerOptions.map((answer) => {
 							// Add onClick listener to this button
 							return (
-								<button key={answer.answerText} onClick={() => handleAnswerClick()}>
+								<button
+									onClick={() => handleAnswerClick(answer.isCorrect)}
+									key={answer.answerText}
+								>
 									{answer.answerText}
 								</button>
 							)
