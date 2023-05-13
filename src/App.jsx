@@ -1,10 +1,9 @@
 import React from 'react'
-import Quiz from './Quiz/Quiz'
-import Remainder from './Remainder/Remainder'
+import Tou from './Tour/Tou'
 const App = () => {
   return (
     <>
-      <Remainder />
+     <Tou />
     </>
   )
 }
